@@ -3,13 +3,13 @@ import Constants from 'expo-constants';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { Children } from 'react';
 
 const StatusBarHeight = Constants.statusBarHeight;
 
 export const StyledContainer = styled.View`
   flex: 1;
   padding: 25px;
-  padding-top: ${StatusBarHeight + 10}px;
 `;
 
 export const InnerContainer = styled.View`
@@ -116,6 +116,18 @@ export const TextLinkContent = styled.Text`
   color: red;
   font-size: 15px;
 `
+
+export const PageHeader = ({
+  children 
+}) => {
+  return (
+    <View style={{ position: 'sticky', top: 0, backgroundColor: '#ECEDEE', zIndex: 1, marginBottom: -80 }}>
+      <View style={{ flexDirection: 'row', height: 80, alignItems: 'flex-end' }}>
+        {children}
+      </View>
+    </View>
+  )
+}
 
 export const LoginTextInput = ({
   label, 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { router, Stack } from 'expo-router';
 
 export const unstable_settings = {
@@ -8,9 +8,23 @@ export const unstable_settings = {
 
 export default function App() {
 
+  const [auth, setAuth] = useState(false);
+
   useEffect(() => {
-    router.replace('/login');
+    if (auth) {
+      router.replace('/explore');
+    } else {
+      router.replace('/login');
+    }
   }, []);
+
+  useEffect(() => {
+    if (auth) {
+      router.replace('/explore');
+    } else {
+      router.replace('/login');
+    }
+  }, [auth]);
 
   return (
     <Stack
@@ -20,6 +34,7 @@ export default function App() {
     >
       <Stack.Screen name="login" />
       <Stack.Screen name="register" />
+      <Stack.Screen name="explore" />
     </Stack>
   );
 }
