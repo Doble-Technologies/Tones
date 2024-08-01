@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import Constants from 'expo-constants';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
-import { Octicons, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 
 const StatusBarHeight = Constants.statusBarHeight;
 
@@ -19,7 +20,7 @@ export const InnerContainer = styled.View`
 
 export const StyledFormArea = styled.View`
   padding-top: 10px;
-  width: 80%;
+  width: 90%;
 `;
 
 export const Title = styled.Text`
@@ -117,25 +118,47 @@ export const TextLinkContent = styled.Text`
 `
 
 export const LoginTextInput = ({
-    label, 
-    icon, 
-    isPassword = false, 
-    hidePassword = true, 
-    setHidePassword = (boolean) => {},
-    ...props
-  }) => {
-    return (
-      <View>
-        <LeftIcon>
-          <Ionicons name={icon} size={30} color='red' />
-        </LeftIcon>
-        <StyledInputLabel>{label}</StyledInputLabel>
-        <StyledTextInput {...props} />
-        {isPassword ? (
-          <RightIcon onPress={() => {setHidePassword(!hidePassword)}}>
-            <Ionicons name={hidePassword ? 'eye-off-outline' : 'eye-outline'} size={30} color="gray" />
-          </RightIcon>
-        ) : null}
-      </View>
-    )
-  }
+  label, 
+  icon, 
+  isPassword = false, 
+  hidePassword = true, 
+  setHidePassword = (boolean) => {},
+  ...props
+}) => {
+  return (
+    <View>
+      <LeftIcon>
+        <Ionicons name={icon} size={30} color='red' />
+      </LeftIcon>
+      <StyledInputLabel>{label}</StyledInputLabel>
+      <StyledTextInput {...props} />
+      {isPassword ? (
+        <RightIcon onPress={() => {setHidePassword(!hidePassword)}}>
+          <Ionicons name={hidePassword ? 'eye-off-outline' : 'eye-outline'} size={30} color="gray" />
+        </RightIcon>
+      ) : null}
+    </View>
+  )
+}
+
+export const LoginDropdownInput = ({
+  label, 
+  icon,
+  selectedValue,
+  onValueChange,
+  items,
+}) => {
+  return (
+    <View>
+      <StyledInputLabel>{label}</StyledInputLabel>
+      <Picker
+        selectedValue={selectedValue}
+        onValueChange={onValueChange}
+      >
+        {items.map((provider) => {
+          return <Picker.Item label={provider.label} value={provider.value} key={provider.value} />
+        })}
+      </Picker>
+    </View>
+  )
+}
