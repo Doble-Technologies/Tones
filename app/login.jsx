@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFormik } from 'formik';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Tabs, Link } from 'expo-router';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { Link } from 'expo-router';
 import {
   PageHeader,
   StyledContainer,
