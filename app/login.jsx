@@ -24,7 +24,6 @@ import {
 } from './helpers.jsx';
 
 export default function TabLayout() {
-    const colorScheme = useColorScheme();
     const [hidePassword, setHidePassword] = useState(true);
     const [loginButtonDisabled, setLoginButtonDisabled] = useState(true);
 
