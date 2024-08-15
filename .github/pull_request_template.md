@@ -1,8 +1,8 @@
 # Description
 
 
-# Does this Fix an Issue Number (Please Link issue)
-## Issue - (###)
+# Fixes an Issue Number - (Please Link issue/If not, delete Question)
+
 
 ## Type of change
 - [ ] Bug fix (non-breaking change which fixes an issue)
