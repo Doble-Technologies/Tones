@@ -1,4 +1,5 @@
 feature: feature/*
 bugfix: bugfix/*
 hotfix: hotfix/*
+refactor: refactor/*
 documentation: ['documentation/*', 'setup/*']
