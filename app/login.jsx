@@ -19,7 +19,7 @@ import {
   ExtraText,
   TextLinkContent,
   LoginTextInput
-} from './helpers.jsx';
+} from './generalHelpers.jsx';
 
 export default function TabLayout() {
     const [hidePassword, setHidePassword] = useState(true);
