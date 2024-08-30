@@ -18,9 +18,8 @@ import {
   ButtonText,
   MessageBox,
   LoginTextInput,
-  LoginDropdownInput,
-  TestLoginDropDownInput,
-} from './helpers.jsx';
+  RegisterDropdownInput,
+} from './generalHelpers.jsx';
 
 export default function Register() {
 
@@ -109,7 +108,7 @@ export default function Register() {
                 keyboardType="number-pad"
                 maxLength={14}
               />
-              <TestLoginDropDownInput
+              <RegisterDropdownInput
                 label="Cellular Provider"
                 isOpen={providerDropdownOpen}
                 setOpen={setProviderDropdownOpen}

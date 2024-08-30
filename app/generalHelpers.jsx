@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import Constants from 'expo-constants';
-import { View, Text, LayoutAnimation, Image, TextInput, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
+import { View, Text, LayoutAnimation, Image, TextInput, TouchableOpacity, TouchableNativeFeedback, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Row } from '../components/Row';
 import { Container } from '../components/Container';
-
-const StatusBarHeight = Constants.statusBarHeight;
 
 export const StyledContainer = styled.View`
   flex: 1;
@@ -62,6 +59,19 @@ export const LeftIcon = styled.View`
 export const RightIcon = styled.TouchableOpacity`
   right: 15px;
   top: 32px;
+  position: absolute;
+  z-index: 1;
+`;
+
+export const DropdownArrow = styled.TouchableOpacity`
+  right: 15px;
+  position: absolute;
+  z-index: 1;
+`;
+
+export const SelectedCheckmark = styled.View`
+  right: 4px;
+  top: 4px;
   position: absolute;
   z-index: 1;
 `;
@@ -229,7 +239,7 @@ export const LoginTextInput = ({
   )
 }
 
-export const TestLoginDropDownInput = ({
+export const RegisterDropdownInput = ({
   label,
   isOpen,
   setOpen,
@@ -243,18 +253,18 @@ export const TestLoginDropDownInput = ({
       <TouchableOpacity activeOpacity={0.8} key={`${menu.menuName}2`}
         style={{ 
           backgroundColor: '#E5E7EB',
-          // marginHorizontal: constant.SPACING / 1.7,
-          // marginVertical: constant.SPACING / 2.5,
+          marginTop: 3,
+          marginBottom: 10,
           borderRadius: '5px',
         }}
         onPress={() => {
-          // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-          LayoutAnimation.configureNext(LayoutAnimation.create(200, 'easeInEaseOut', 'opacity'))
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+          LayoutAnimation.configureNext(LayoutAnimation.create(200, 'easeInEaseOut', 'opacity'));
           isOpen ? setOpen(false) : setOpen(true);
         }}>
         <Row style={{
-          // paddingHorizontal: constant.SPACING / 1.5,
-          // paddingVertical: constant.SPACING / 1.2,
+          paddingHorizontal: 16,
+          paddingVertical: 16 / 1.2,
         }}>
           <Ionicons 
             name={menu.iconName} 
@@ -262,24 +272,59 @@ export const TestLoginDropDownInput = ({
             color={menu.iconColor} 
           />
           <Text style={{
-            // fontSize: constant.textFontSize,
-            // paddingHorizontal: constant.SPACING
+            fontSize: 16,
+            paddingHorizontal: 16
           }}>
             {selectedValue ? providerConversion[selectedValue] : menu.placeholder}
           </Text>
+          <DropdownArrow
+            onPress={() => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+              LayoutAnimation.configureNext(LayoutAnimation.create(200, 'easeInEaseOut', 'opacity'));
+              isOpen ? setOpen(false) : setOpen(true);
+            }}
+          >
+            <Ionicons 
+              name={isOpen ? "chevron-up-outline" : "chevron-down-outline"}
+              size={30}
+              color="gray" 
+            />
+          </DropdownArrow>
         </Row>
-        {isOpen && <View style={{ borderRadius: '5px', backgroundColor: '#E5E7EB' }}>
-          {menu.dropdownList.map((subMenu, index) => (
-            <TouchableNativeFeedback key={index}>
-              <View style={{
-                // paddingHorizontal: constant.SPACING,
-                // paddingVertical: constant.SPACING / 1.5,
-              }}>
-                <Text>{subMenu.label}</Text>
-              </View>
-            </TouchableNativeFeedback>
-          ))}
-        </View>}
+        {isOpen && <ScrollView style={{ borderRadius: '5px', backgroundColor: '#E5E7EB' }}>
+          {menu.dropdownList.map((subMenu, index) => {
+            return (
+              <TouchableNativeFeedback
+                key={index}
+                onPress={() => {
+                  onValueChange(subMenu.value);
+                  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                  LayoutAnimation.configureNext(LayoutAnimation.create(200, 'easeInEaseOut', 'opacity'));
+                  setOpen(false);
+                }}
+              >
+                <View style={{
+                  paddingHorizontal: 16,
+                  paddingVertical: 16 / 1.5,
+                  borderTopColor: 'gray',
+                  borderTopWidth: .5,
+                  marginHorizontal: 10
+                }}>
+                  <Text>{subMenu.label}</Text>
+                  {selectedValue === subMenu.value &&
+                    <SelectedCheckmark>
+                      <Ionicons 
+                        name="checkmark-outline"
+                        size={30}
+                        color="red" 
+                      />
+                    </SelectedCheckmark>
+                  }
+                </View>
+              </TouchableNativeFeedback>
+            )
+          })}
+        </ScrollView>}
       </TouchableOpacity>
     </Container>
   )
