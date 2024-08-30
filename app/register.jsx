@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import {
+  providerMenu,
   PageHeader,
   StyledContainer,
   InnerContainer,
@@ -17,20 +18,16 @@ import {
   ButtonText,
   MessageBox,
   LoginTextInput,
-  LoginDropdownInput
+  LoginDropdownInput,
+  TestLoginDropDownInput,
 } from './helpers.jsx';
-
-const providers = [
-  {label: 'Verizon', value: 'verizon'},
-  {label: 'AT&T', value: 'att'},
-  {label: 'T-Mobile', value: 'tmobile'}
-]
-
 
 export default function Register() {
 
+  const [providerDropdownOpen, setProviderDropdownOpen] = useState(false);
   const [hidePassword, setHidePassword] = useState(true);
   const [registerButtonDisabled, setRegisterButtonDisabled] = useState(true);
+
 
   const formik = useFormik({
     initialValues: {
@@ -112,11 +109,13 @@ export default function Register() {
                 keyboardType="number-pad"
                 maxLength={14}
               />
-              <LoginDropdownInput
+              <TestLoginDropDownInput
                 label="Cellular Provider"
+                isOpen={providerDropdownOpen}
+                setOpen={setProviderDropdownOpen}
                 selectedValue={formik.values.provider}
                 onValueChange={formik.handleChange('provider')}
-                items={providers}
+                menu={providerMenu}
               />
               <LoginTextInput 
                 label="Email Address"

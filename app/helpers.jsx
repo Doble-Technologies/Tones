@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import Constants from 'expo-constants';
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, LayoutAnimation, Image, TextInput, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Picker } from '@react-native-picker/picker';
-import { Children } from 'react';
+import { Row } from '../components/Row';
+import { Container } from '../components/Container';
 
 const StatusBarHeight = Constants.statusBarHeight;
 
@@ -117,6 +117,82 @@ export const TextLinkContent = styled.Text`
   font-size: 15px;
 `
 
+const ProviderDropdown = styled.TouchableOpacity`
+  background-color: #E5E7EB;
+  padding: 15px 55px 15px 55px;
+  border-radius: 5px;
+  font-size: 16px;
+  height: 60px;
+  margin-vertical: 3px;
+  margin-bottom: 10px;
+`
+
+export const providerMenu = {
+  menuName: 'providerList',
+  placeholder: 'Select Provider',
+  iconColor: 'red',
+  iconName: 'globe-outline',
+  dropdownList: [
+    { label: 'AllTel', value: 'alltel' },
+    { label: 'AT&T', value: 'att' },
+    { label: 'AT&T MMS', value: 'attmms' },
+    { label: 'Boost', value: 'boost' },
+    { label: 'Boost MMS', value: 'boostmms' },
+    { label: 'C Spire', value: 'c' },
+    { label: 'Consumer Cellular', value: 'consumer' },
+    { label: 'Cricket', value: 'cricket' },
+    { label: 'Cricket MMS', value: 'cricketmms' },
+    { label: 'Google Fi', value: 'googlefi' },
+    { label: 'Mint Mobile', value: 'mint' },
+    { label: 'MetroPCS', value: 'metro' },
+    { label: 'Optimum', value: 'optimum' },
+    { label: 'Republic Wireless', value: 'republic' },
+    { label: 'Spectrum', value: 'spectrum' },
+    { label: 'Sprint', value: 'sprint' },
+    { label: 'Sprint MMS', value: 'sprintmms' },
+    { label: 'Ting', value: 'ting' },
+    { label: 'T-Mobile', value: 'tmobile' },
+    { label: 'TracFone', value: 'tracfone' },
+    { label: 'US Cellular', value: 'us' },
+    { label: 'US Cellular MMS', value: 'usmms' },
+    { label: 'Verizon', value: 'verizon' },
+    { label: 'Verizon MMS', value: 'verizonmms' },
+    { label: 'VerizonBiz', value: 'verizonbiz' },
+    { label: 'Virgin', value: 'virgin' },
+    { label: 'Virgin MMS', value: 'virginmms' },
+  ]
+}
+
+const providerConversion = {
+  alltel: 'AllTel',
+  att: 'AT&T',
+  attmms: 'AT&T MMS',
+  boost: 'Boost',
+  boostmms: 'Boost MMS',
+  c: 'C Spire',
+  consumer: 'Consumer Cellular',
+  cricket: 'Cricket',
+  cricketmms: 'Cricket MMS',
+  googlefi: 'Google Fi',
+  mint: 'Mint Mobile',
+  metro: 'MetroPCS',
+  optimum: 'Optimum',
+  republic: 'Republic Wireless',
+  spectrum: 'Spectrum',
+  sprint: 'Sprint',
+  sprintmms: 'Sprint MMS',
+  ting: 'Ting',
+  tmobile: 'T-Mobile',
+  tracfone: 'TracFone',
+  us: 'US Cellular',
+  usmms: 'US Cellular MMS',
+  verizon: 'Verizon',
+  verizonmms: 'Verizon MMS',
+  verizonbiz: 'VerizonBiz',
+  virgin: 'Virgin',
+  virginmms: 'Virgin MMS',
+}
+
 export const PageHeader = ({
   children 
 }) => {
@@ -153,24 +229,58 @@ export const LoginTextInput = ({
   )
 }
 
-export const LoginDropdownInput = ({
-  label, 
-  icon,
+export const TestLoginDropDownInput = ({
+  label,
+  isOpen,
+  setOpen,
   selectedValue,
   onValueChange,
-  items,
+  menu
 }) => {
   return (
-    <View>
+    <Container>
       <StyledInputLabel>{label}</StyledInputLabel>
-      <Picker
-        selectedValue={selectedValue}
-        onValueChange={onValueChange}
-      >
-        {items.map((provider) => {
-          return <Picker.Item label={provider.label} value={provider.value} key={provider.value} />
-        })}
-      </Picker>
-    </View>
+      <TouchableOpacity activeOpacity={0.8} key={`${menu.menuName}2`}
+        style={{ 
+          backgroundColor: '#E5E7EB',
+          // marginHorizontal: constant.SPACING / 1.7,
+          // marginVertical: constant.SPACING / 2.5,
+          borderRadius: '5px',
+        }}
+        onPress={() => {
+          // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+          LayoutAnimation.configureNext(LayoutAnimation.create(200, 'easeInEaseOut', 'opacity'))
+          isOpen ? setOpen(false) : setOpen(true);
+        }}>
+        <Row style={{
+          // paddingHorizontal: constant.SPACING / 1.5,
+          // paddingVertical: constant.SPACING / 1.2,
+        }}>
+          <Ionicons 
+            name={menu.iconName} 
+            size={30}
+            color={menu.iconColor} 
+          />
+          <Text style={{
+            // fontSize: constant.textFontSize,
+            // paddingHorizontal: constant.SPACING
+          }}>
+            {selectedValue ? providerConversion[selectedValue] : menu.placeholder}
+          </Text>
+        </Row>
+        {isOpen && <View style={{ borderRadius: '5px', backgroundColor: '#E5E7EB' }}>
+          {menu.dropdownList.map((subMenu, index) => (
+            <TouchableNativeFeedback key={index}>
+              <View style={{
+                // paddingHorizontal: constant.SPACING,
+                // paddingVertical: constant.SPACING / 1.5,
+              }}>
+                <Text>{subMenu.label}</Text>
+              </View>
+            </TouchableNativeFeedback>
+          ))}
+        </View>}
+      </TouchableOpacity>
+    </Container>
   )
 }
