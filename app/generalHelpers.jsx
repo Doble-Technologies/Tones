@@ -208,9 +208,7 @@ export const PageHeader = ({
 }) => {
   return (
     <View style={{ position: 'sticky', top: 0, backgroundColor: '#ECEDEE', zIndex: 1, marginBottom: -80 }}>
-      <View style={{ flexDirection: 'row', height: 80, alignItems: 'flex-end' }}>
-        {children}
-      </View>
+      {children}
     </View>
   )
 }

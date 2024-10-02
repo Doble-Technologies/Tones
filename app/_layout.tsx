@@ -12,7 +12,7 @@ export default function App() {
 
   useEffect(() => {
     if (auth) {
-      router.replace('/explore');
+      router.replace('./landing');
     } else {
       router.replace('/login');
     }
@@ -20,7 +20,7 @@ export default function App() {
 
   useEffect(() => {
     if (auth) {
-      router.replace('/explore');
+      router.replace('./landing');
     } else {
       router.replace('/login');
     }
@@ -35,6 +35,7 @@ export default function App() {
       <Stack.Screen name="login" />
       <Stack.Screen name="register" />
       <Stack.Screen name="explore" />
+      <Stack.Screen name="landing" />
     </Stack>
   );
 }

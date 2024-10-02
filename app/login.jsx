@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useFormik } from 'formik';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { router, Link } from 'expo-router';
 import {
   PageHeader,
   StyledContainer,
@@ -24,6 +25,7 @@ import {
 export default function TabLayout() {
     const [hidePassword, setHidePassword] = useState(true);
     const [loginButtonDisabled, setLoginButtonDisabled] = useState(true);
+    const [auth, setAuth] = useState(true);
 
     const formik = useFormik({
       initialValues: {
@@ -33,6 +35,7 @@ export default function TabLayout() {
       onSubmit: (values) => {
         values.number = values.number.replace(/[()\-\s]/g, '');
         console.log(values);
+        setAuth(true);
       },
     });
 
@@ -47,10 +50,18 @@ export default function TabLayout() {
         }
       }
     }, [formValues])
+
+    useEffect(() => {
+      if (auth) {
+        router.navigate('./landing');
+      }
+    }, [auth])
   
     return (
       <React.Fragment>
-        <PageHeader />
+        <PageHeader>
+          <View style={{ flexDirection: 'row', height: 80, alignItems: 'center' }} />
+        </PageHeader>
         <StyledContainer>
           <StatusBar style="dark" />
           <SafeAreaView />
