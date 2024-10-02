@@ -15,7 +15,7 @@ const typeMap = {
     Rescue: 'Fire & EMS'
 }
 
-const deptList = [
+const initList = [
     {
         deptId: 0,
         dept: 'Darien EMS',
@@ -53,13 +53,32 @@ const deptList = [
 
 export default function Landing() {
     const actionSheetRef = useRef(null);
-    const selectedDepartment = deptList?.find((dept) => {
-        return dept?.selected;
-    });
+    const [deptList, setDeptList] = useState(initList);
+    const [selectedDepartment, setSelectedDepartment] = useState(deptList?.find((dept) => {
+        return dept?.primary;
+    }));
 
     const updateSelectedDepartment = (currentSelectedId, newSelectedId) => {
-        console.log('items: ', currentSelectedId, newSelectedId);
+        if (currentSelectedId !== newSelectedId) {
+            setDeptList(deptList?.map((item) => {
+                if (item?.selected) {
+                    item.selected = false;
+                }
+                if (item?.deptId === newSelectedId) {
+                    item.selected = true;
+                }
+                return item;
+            }))
+        }
     };
+
+    useEffect(() => {
+        if (deptList) {
+            setSelectedDepartment(deptList?.find((dept) => {
+                return dept?.selected;
+            }));
+        }
+    }, [deptList])
   
     return (
       <React.Fragment>
@@ -102,10 +121,17 @@ export default function Landing() {
                                     marginVertical: 6,
                                     padding: 10
                                 }}
+                                onPress={() => {return updateSelectedDepartment(selectedDepartment?.deptId, item?.deptId)}}
                             >
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ color: 'black', fontWeight: 600, fontSize: '16px' }}>{item?.dept}</Text>
-                                    {item?.primary ? <Text>*</Text> : null}
+                                    {item?.primary ? <Ionicons name="star" size={16} color="yellow" style={{ 
+                                        paddingLeft: 20, 
+                                        shadowColor: '#333', 
+                                        shadowOffset: 1,
+                                        shadowOpacity: 1, 
+                                        shadowRadius: 6
+                                    }} /> : null}
                                 </View>
                                 <Text>{`${item?.deptAbv} - ${typeMap[item?.type]}`}</Text>
                             </TouchableOpacity>
