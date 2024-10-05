@@ -65,10 +65,12 @@ export default function Register() {
   return (
     <View>
       <PageHeader>
-        <TouchableOpacity onPress={router.back} style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Ionicons name="arrow-back-outline" size={30} color="red" style={{ paddingLeft: 20 }} />
-          <Text style={{ color: 'red', fontWeight: 600 }}>Back to Login</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', height: 80, alignItems: 'flex-end' }}>
+          <TouchableOpacity onPress={router.back} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Ionicons name="arrow-back-outline" size={30} color="red" style={{ paddingLeft: 20 }} />
+            <Text style={{ color: 'red', fontWeight: 600 }}>Back to Login</Text>
+          </TouchableOpacity>
+        </View>
       </PageHeader>
       <ScrollView>
         <StyledContainer>

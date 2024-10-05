@@ -7,24 +7,9 @@ export const unstable_settings = {
 };
 
 export default function App() {
-
-  const [auth, setAuth] = useState(false);
-
   useEffect(() => {
-    if (auth) {
-      router.replace('./landing');
-    } else {
-      router.replace('/login');
-    }
+    router.replace('/login');
   }, []);
-
-  useEffect(() => {
-    if (auth) {
-      router.replace('./landing');
-    } else {
-      router.replace('/login');
-    }
-  }, [auth]);
 
   return (
     <Stack
@@ -35,6 +20,7 @@ export default function App() {
       <Stack.Screen name="login" />
       <Stack.Screen name="register" />
       <Stack.Screen name="explore" />
+      <Stack.Screen name="incidents" />
       <Stack.Screen name="landing" />
     </Stack>
   );

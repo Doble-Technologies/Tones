@@ -207,7 +207,17 @@ export const PageHeader = ({
   children 
 }) => {
   return (
-    <View style={{ position: 'sticky', top: 0, backgroundColor: '#ECEDEE', zIndex: 1, marginBottom: -80 }}>
+    <View style={{ position: 'sticky', top: 0, backgroundColor: '#ECEDEE', zIndex: 1, marginBottom: -100 }}>
+      {children}
+    </View>
+  )
+}
+
+export const PageFooter = ({
+  children 
+}) => {
+  return (
+    <View style={{ position: 'fixed', top: 0, backgroundColor: '#ECEDEE', zIndex: 1 }}>
       {children}
     </View>
   )

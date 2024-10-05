@@ -22,10 +22,10 @@ import {
   LoginTextInput
 } from './generalHelpers.jsx';
 
-export default function TabLayout() {
+export default function Login() {
     const [hidePassword, setHidePassword] = useState(true);
     const [loginButtonDisabled, setLoginButtonDisabled] = useState(true);
-    const [auth, setAuth] = useState(true);
+    const [auth, setAuth] = useState(false);
 
     const formik = useFormik({
       initialValues: {
@@ -52,8 +52,14 @@ export default function TabLayout() {
     }, [formValues])
 
     useEffect(() => {
+      // Temp for Testing
+      // if (!auth) {
+      //   setTimeout(() => {
+      //     router.navigate('./incidents');
+      //   }, 1000);
+      // }
       if (auth) {
-        router.navigate('./landing');
+        router.navigate('./incidents');
       }
     }, [auth])
   
@@ -103,6 +109,12 @@ export default function TabLayout() {
                 <ExtraText>Don't have an account already? </ExtraText>
                 <Link href='./register'>
                   <TextLinkContent>Register</TextLinkContent>
+                </Link>
+                <Link href='./incidents'>
+                  <TextLinkContent>Incidents</TextLinkContent>
+                </Link>
+                <Link href='./landing'>
+                  <TextLinkContent>Landing</TextLinkContent>
                 </Link>
               </ExtraView>
             </StyledFormArea>
