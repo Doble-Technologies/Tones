@@ -794,6 +794,67 @@ export default function Landing() {
                 }}
             />
         </PageFooter>
+        <DepartmentActionSheet 
+                ref={actionSheetRef}
+                gestureEnabled
+                containerStyle={{
+                    height: "50%",
+                    width: "100%",
+                    backgroundColor: '#ECEDEE',
+                }}
+            >
+                <View style={{ flexDirection: 'column', padding: 20 }}>
+                    {deptList?.map((item) => {
+                        return (
+                            <View style={{ padding: 2 }} key={item?.deptId}>
+                                <TouchableOpacity 
+                                    style={{
+                                        borderRadius: 6,
+                                        elevation: 3,
+                                        backgroundColor: item?.selected ? 'grey' : '#fff',
+                                        shadowOffset: { width: 1, height: 1 },
+                                        shadowColor: '#333',
+                                        shadowOpacity: 0.3,
+                                        shadowRadius: 2,
+                                        marginHorizontal: 20,
+                                        marginVertical: 6,
+                                        padding: 10
+                                    }}
+                                    onPress={() => {
+                                        actionSheetRef.current?.hide();
+                                        return updateSelectedDepartment(
+                                            selectedDepartment?.deptId, 
+                                            item?.deptId
+                                        )
+                                    }}
+                                >
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <Text 
+                                            style={{ 
+                                                color: selectedDepartmentColorPicker(
+                                                    item?.type
+                                                ), 
+                                                fontWeight: 600, 
+                                                fontSize: '16px' 
+                                            }}
+                                        >
+                                            {item?.dept}
+                                        </Text>
+                                        {item?.primary ? <Ionicons name="star" size={16} color="yellow" style={{ 
+                                            paddingLeft: 20, 
+                                            shadowColor: '#333', 
+                                            shadowOffset: 1,
+                                            shadowOpacity: 1, 
+                                            shadowRadius: 6
+                                        }} /> : null}
+                                    </View>
+                                    <Text>{`${item?.deptAbv} - ${departmentTypeMap[item?.type]}`}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        );
+                    })}
+                </View>
+            </DepartmentActionSheet>
       </React.Fragment>
     );
   }
